@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+
+  api:
+    build:
+      context: ./server
+    image: rush-app
+    container_name: server
+    environment:
+      - SERVER_PORT:8080
+    ports:
+      - 8080:8080  
+    volumes:
+      - ./server:/server/api   
+      - /server/api/repositories
+  
+  client:
+    build:
+      context: ./client
+    container_name: client    
+    ports: 
+      - 3000:3000
+    volumes:
+      - ./client:/client/app
+      - /client/app/node_modules     
