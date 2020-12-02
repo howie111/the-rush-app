@@ -13,10 +13,11 @@ import (
 type Server struct {
 	server         *http.Server
 	recordProvider RecordProvider
+	recordCreator  RecordCreator
 }
 
-func NewServer(server *http.Server, recordProvider RecordProvider) *Server {
-	return &Server{server, recordProvider}
+func NewServer(server *http.Server, recordProvider RecordProvider, recordCreator RecordCreator) *Server {
+	return &Server{server, recordProvider, recordCreator}
 }
 
 func (server *Server) ListenAndServe(port string) error {
@@ -28,8 +29,10 @@ func (server *Server) ListenAndServe(port string) error {
 	})
 
 	getRecordsController := NewGetRecordController(server.recordProvider)
+	postRecordsController := NewPostRecordController(server.recordCreator)
 
 	router.Handle("/records", getRecordsController).Methods("GET")
+	router.Handle("/records", postRecordsController).Methods("POST")
 
 	server.server = &http.Server{Addr: ":" + port, Handler: router}
 

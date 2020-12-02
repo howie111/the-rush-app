@@ -17,7 +17,7 @@ func main() {
 
 	recordGateway := NewDbBasedRecordGateway()
 
-	server := NewServer(nil, recordGateway)
+	server := NewServer(nil, recordGateway, recordGateway)
 
 	go func() {
 		err := server.ListenAndServe(portNumber)

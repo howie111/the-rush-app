@@ -8,6 +8,7 @@ import (
 )
 
 type DbBasedRecordGateWay struct {
+	records []Record
 }
 
 func NewDbBasedRecordGateway() *DbBasedRecordGateWay {
@@ -30,4 +31,11 @@ func (d *DbBasedRecordGateWay) GetRecords() ([]Record, error) {
 	}
 
 	return records, nil
+}
+
+func (d *DbBasedRecordGateWay) CreateRecord(record Record) error {
+
+	d.records = append(d.records, record)
+
+	return nil
 }
