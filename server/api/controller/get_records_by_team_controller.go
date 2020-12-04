@@ -3,17 +3,18 @@ package controller
 import (
 	"encoding/json"
 	"net/http"
+
+	. "github.com/howie111/the-rush-app/api/models"
 )
 
-type GetRecordsController struct {
+type GetRecordsByTeamController struct {
 	recordProvider RecordProvider
 }
 
-func NewGetRecordController(recordProvider RecordProvider) *GetRecordsController {
-	return &GetRecordsController{recordProvider}
+func NewGetRecordsByTeamController(recordProvider RecordProvider) *GetRecordsByTeamController {
+	return &GetRecordsByTeamController{recordProvider}
 }
-
-func (g *GetRecordsController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (g *GetRecordsByTeamController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -32,4 +33,9 @@ func (g *GetRecordsController) ServeHTTP(w http.ResponseWriter, r *http.Request)
 
 	w.Write(bytes)
 
+}
+
+type RecordByTeam struct {
+	Name string  `json:"Name"`
+	Yds  float64 `json:"Yds"`
 }
